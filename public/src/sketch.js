@@ -7,6 +7,7 @@ var Body = Matter.Body;
 var engine
 var pendulum
 var runner
+var points=[]
 function preload(){
 	//fuente = loadFont("./assets/VCR_OSD_MONO.ttf")
 }
@@ -16,31 +17,26 @@ function setup() {
 	runner = Runner.create()
 	var canvas =createCanvas(500, 500);	
 	frameRate(30)
-	 pendulum=new Pendulum(250,250,20)
+	 pendulum=new Pendulum(250,250)
 	 console.log(pendulum)
 	Runner.run(runner,engine)
 }
 
 function draw(){
+	if(points.length>100) points.shift()
 	clear();
-	fill(0)
-	textSize(20)
-	let x=pendulum.tangente().x
-	let y=pendulum.tangente().y
-	text(x.toString(),10,10)
-	text(y.toString(),10,30)
-	let power=0.004
-if(keyIsDown(RIGHT_ARROW)) {
-	pendulum.body.force.y=-power*x
-	pendulum.body.force.x=-power*y
+	push()
+	for(o of points){
+		strokeWeight(2)
+		stroke('purple')
+		point(o.x,o.y)
+	}
+	pop()
+	if(frameCount%1==0) points.push(pendulum.getPos())
 
-}
-if(keyIsDown(LEFT_ARROW)){
-	pendulum.body.force.y=power*x
-	pendulum.body.force.x=power*y
-} 
-	//Engine.update(engine)
-	fill(100)
+	if(keyIsDown(RIGHT_ARROW))pendulum.action(0)
+	if(keyIsDown(LEFT_ARROW))pendulum.action(2)
+	fill(255)
 	pendulum.draw()
 	//console.log(boxA)
 }

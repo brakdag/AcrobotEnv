@@ -4,7 +4,7 @@ class Pendulum{
 	this.x=x
 	this.y=y
 	var options={
-		mass:2,
+		mass:20,
 		frictionAir:0
 	}
 	this.body = Bodies.circle(x, y+100, r,options);
@@ -29,27 +29,38 @@ class Pendulum{
 	}
 
 	draw(){
-	rectMode(CENTER)
-	line(this.body.position.x,this.body.position.y,this.x,this.y)
-	line(this.body.position.x,this.body.position.y,this.body2.position.x,this.body2.position.y)
-	//line(this.body.position.x,this.body.position.y,this.body.position.x+this.tangente().y*100,this.body.position.y+this.tangente().x*100)
-	fill(200)
-	circle(this.body.position.x,this.body.position.y,this.r)
-	circle(this.body2.position.x,this.body2.position.y,this.r)
+		rectMode(CENTER)
+		strokeWeight(10);
+		line(this.body.position.x,this.body.position.y,this.x,this.y)
+		line(this.body.position.x,this.body.position.y,this.body2.position.x,this.body2.position.y)
+		line(this.body2.position.x,this.body2.position.y,this.body2.position.x+this.tangente().y*100,this.body2.position.y+this.tangente().x*100)
+		fill(200)
+		circle(this.body.position.x,this.body.position.y,this.r)
+		circle(this.body2.position.x,this.body2.position.y,this.r)
 	}
 
 	tangente(){
-		let z = Math.sqrt((this.body.position.y-this.y)**2+(this.body.position.x-this.x)**2)
-		let dy = (this.body.position.y-this.y)/z
-		let dx = (this.body.position.x-this.x)/z
+		let z = Math.sqrt((this.body2.position.y-this.body.position.y)**2+(this.body2.position.x-this.body.position.x)**2)
+		let dy = (this.body2.position.y-this.body.position.y)/z
+		let dx = (this.body2.position.x-this.body.position.x)/z
 		let x = +dy
 		let y = -dx
 		return {x:dx,y:-dy}
 	}
 
+	action (n){
+		let x=pendulum.tangente().x
+		let y=pendulum.tangente().y
+		let power=0.1
+		switch(n){
+			case 0: this.body2.force.y=-power*x;
+			        this.body2.force.x=-power*y;break;
+			case 1: break;
+			case 2:
+					this.body2.force.y=power*x;
+					this.body2.force.x=power*y;
+		}
 
-	angulo(){
 		
-
 	}
 }
