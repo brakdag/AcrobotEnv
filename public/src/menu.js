@@ -40,6 +40,7 @@ class Menu{
 		clear();
 		let resp=this.env.step(action)
 		fill(20)
+		textSize(12)
 		text(`${resp.observation.map(a=>a.toFixed(2))}`,10,10)
 		text(`Frames:${frameRate()}Reward:${resp.reward},Terminal:${resp.terminal}`,10,30)
 		fill(255)
@@ -61,6 +62,16 @@ class Menu{
 	fast(env){
 		
 	}
+
+
+	env_test(){
+		console.time("prueba")
+			for(let i=0;i<1000;i++){
+			let resp=env.step(Math.trunc(Math.random()*3-1))
+			}
+		console.timeEnd("prueba")
+	}
+
 }
 
 
