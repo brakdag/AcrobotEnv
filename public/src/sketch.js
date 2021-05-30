@@ -1,41 +1,23 @@
-
-var Engine = Matter.Engine
-var Bodies = Matter.Bodies
-var Composite = Matter.Composite;
-var Runner = Matter.Runner
-var Body = Matter.Body;
-var engine
 var pendulum
-var runner
-var points=[]
-function preload(){
-	//fuente = loadFont("./assets/VCR_OSD_MONO.ttf")
-}
 
-function setup() {
-	engine = Engine.create(); 
-	runner = Runner.create()
+function setup(){
+	
 	var canvas =createCanvas(500, 500);	
-	frameRate(30)
-	 pendulum=new Pendulum(250,250)
-	 console.log(pendulum)
-	Runner.run(runner,engine)
+	//var render = Render.create({element: document.body,engine: engine});
+	frameRate(15)
+	pendulum=new Pendulum(250,250)
+	 
 }
 
 function draw(){
-	if(points.length>100) points.shift()
+	let action=0	
+	if(keyIsDown(RIGHT_ARROW))action=-1
+	if(keyIsDown(LEFT_ARROW))action=1
 	clear();
-	push()
-	for(o of points){
-		strokeWeight(2)
-		stroke('purple')
-		point(o.x,o.y)
-	}
-	pop()
-	if(frameCount%1==0) points.push(pendulum.getPos())
-
-	if(keyIsDown(RIGHT_ARROW))pendulum.action(0)
-	if(keyIsDown(LEFT_ARROW))pendulum.action(2)
+	resp=pendulum.step(action)
+	fill(20)
+	text(`${resp.observation.map(a=>a.toFixed(2))}`,10,10)
+	text(`Reward:${resp.reward},Terminal:${resp.terminal}`,10,30)
 	fill(255)
 	pendulum.draw()
 	//console.log(boxA)

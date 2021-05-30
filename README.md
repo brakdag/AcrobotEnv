@@ -2,6 +2,37 @@
 port of AcrobotEnv in openai environment in gym python to javascript
 
 
+## Mensaje del editor Spanish.
+
+El objetivo principal de este proyecto es imitar el código compartido por openai,escrito para
+python pero utilizando las herramientas que tenemos en javascript. 
+
+
+## Traducción de texto al español.
+
+Acrobot es un pendulo de 2 barras, con sólo la segunda junta motorizada. 
+Inicialmente, ambas barras apuntan hacia abajo. El objetivo es moverlo
+a una altura al menos el largo de uno de las barras sobre la base.
+
+Ambas barras puede moverse libremente y pueden pasar una sobre la otra, o sea que no colisinan cuando
+tienen el mismo ángulo.
+
+ESTADO:
+El estado consiste en el seno y conseno de los dos angulos y las velocidades angulares.
+
+ [cos(theta1) sin(theta1) cos(theta2) sin(theta2) thetaDot1 thetaDot2].
+
+Para la primera barra, una ángulo de 0 corresponde cuando la barra está para abajo.
+El ángulo de la segunda barra es relativa al angulo de la primera barra.
+El ángulo 0 corresponde cuando se tiene el mismo ángulo de la primera barra. 
+Un estado [1, 0, 1, 0, ..., ...] significa que ambas barras estan mirando hacia abajo.
+
+ACCIONES:
+
+La acciones es aplicar torque de +1, 0 or -1 sobre la junta entre las dos barras del pendulo.
+
+
+
     """
     Acrobot is a 2-link pendulum with only the second joint actuated.
     Initially, both links point downwards. The goal is to swing the
